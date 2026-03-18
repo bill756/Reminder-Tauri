@@ -1,0 +1,422 @@
+/* ================================================
+   Zen Wellness - Sedentary Reminder Design
+   Aesthetic: Organic, calm, nature-inspired
+   ================================================ */
+
+:root {
+  /* Nature-inspired palette */
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1a1a18;
+  --bg-card: #242420;
+  --bg-card-hover: #2e2e28;
+
+  /* Warm accent colors */
+  --accent-primary: #c9a962;
+  --accent-secondary: #8b7355;
+  --accent-glow: rgba(201, 169, 98, 0.3);
+
+  /* Text colors */
+  --text-primary: #f5f0e8;
+  --text-secondary: #a09888;
+  --text-muted: #6a6560;
+
+  /* Status colors */
+  --status-work: #c9a962;
+  --status-rest: #7fb069;
+  --status-warning: #e07a5f;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Typography */
+  --font-display: 'Noto Serif SC', 'Songti SC', Georgia, serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', monospace;
+
+  /* Effects */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0px var(--accent 0 30-glow);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ================================================
+   Background Atmosphere
+   ================================================ */
+.settings {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: var(--space-xl);
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(201, 169, 98, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(143, 115, 85, 0.06) 0%, transparent 50%),
+    linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.settings::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+/* ================================================
+   Header
+   ================================================ */
+.settings h1 {
+  position: relative;
+  margin-bottom: var(--space-2xl);
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 2px;
+}
+
+.settings h1::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+}
+
+/* ================================================
+   Form Groups
+   ================================================ */
+.form-group {
+  position: relative;
+  margin-bottom: var(--space-lg);
+  width: 100%;
+  max-width: 280px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--space-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.form-group input[type="number"] {
+  width: 100%;
+  padding: var(--space-md) var(--space-lg);
+  font-size: 18px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid rgba(201, 169, 98, 0.2);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: all var(--transition-normal);
+}
+
+.form-group input[type="number"]:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.form-group input[type="number"]::-webkit-inner-spin-button,
+.form-group input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+  height: 30px;
+}
+
+/* Custom number input styling */
+.form-group input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ================================================
+   Checkbox
+   ================================================ */
+.form-group.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-lg);
+}
+
+.form-group.checkbox label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-transform: none;
+}
+
+.form-group.checkbox input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--bg-card);
+  border: 1px solid rgba(201, 169, 98, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.form-group.checkbox input[type="checkbox"]:checked {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.form-group.checkbox input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--bg-primary);
+}
+
+/* ================================================
+   Start Button
+   ================================================ */
+.btn-start {
+  position: relative;
+  margin-top: var(--space-lg);
+  padding: var(--space-md) var(--space-2xl);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--bg-primary);
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.btn-start::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow), var(--shadow-soft);
+}
+
+.btn-start:hover::before {
+  left: 100%;
+}
+
+.btn-start:active {
+  transform: translateY(0);
+}
+
+/* ================================================
+   Work Timer - Floating Window
+   ================================================ */
+.work-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: var(--space-lg);
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  cursor: move;
+  -webkit-app-region: drag;
+}
+
+.work-timer button,
+.work-timer input {
+  -webkit-app-region: no-drag;
+}
+
+.work-timer .time {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--accent-primary);
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Warning state - last 15 seconds */
+.work-timer.warning {
+  background: linear-gradient(135deg, #8b2020 0%, #5a1515 100%);
+  animation: pulse-warning 1s ease-in-out infinite;
+}
+
+.work-timer.warning .time {
+  color: #ffaaaa;
+  text-shadow: 0 0 20px rgba(255, 100, 100, 0.8);
+  font-size: 40px;
+}
+
+.work-timer .warn-text {
+  margin-top: var(--space-sm);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--status-warning);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+@keyframes pulse-warning {
+  0%, 100% { box-shadow: 0 0 10px rgba(224, 122, 95, 0.2); }
+  50% { box-shadow: 0 0 25px rgba(224, 122, 95, 0.4); }
+}
+
+/* ================================================
+   Rest Overlay - Fullscreen
+   ================================================ */
+.rest-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background:
+    radial-gradient(ellipse at center, rgba(127, 176, 105, 0.15) 0%, transparent 70%),
+    linear-gradient(180deg, #0a0a0a 0%, #151510 100%);
+  animation: rest-fade-in 0.5s ease;
+}
+
+@keyframes rest-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.rest-content {
+  text-align: center;
+  animation: content-slide-up 0.6s ease 0.2s both;
+}
+
+@keyframes content-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rest-content h2 {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.rest-content .warning {
+  font-size: 20px;
+  color: var(--status-rest);
+  margin-bottom: var(--space-xl);
+  font-weight: 500;
+}
+
+.rest-content p {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xl);
+}
+
+.rest-timer {
+  font-family: var(--font-mono);
+  font-size: 80px;
+  font-weight: 300;
+  color: var(--status-rest);
+  letter-spacing: 8px;
+  text-shadow: 0 0 40px rgba(127, 176, 105, 0.4);
+  animation: timer-glow 2s ease-in-out infinite;
+}
+
+@keyframes timer-glow {
+  0%, 100% { text-shadow: 0 0 40px rgba(127, 176, 105, 0.4); }
+  50% { text-shadow: 0 0 60px rgba(127, 176, 105, 0.6); }
+}
+
+/* ================================================
+   Responsive Adjustments
+   ================================================ */
+@media (max-width: 400px) {
+  .settings {
+    padding: var(--space-lg);
+  }
+
+  .settings h1 {
+    font-size: 22px;
+  }
+
+  .form-group {
+    max-width: 240px;
+  }
+
+  .rest-timer {
+    font-size: 60px;
+  }
+
+  .rest-content h2 {
+    font-size: 28px;
+  }
+}
