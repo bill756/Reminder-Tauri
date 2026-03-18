@@ -43,6 +43,10 @@
 - Windows 10/11
 - WebView2 运行时（首次运行时会自动下载安装）
 
+## 下载安装
+
+预构建的安装包可在 [GitHub Releases](https://github.com/bill756/Reminder-Tauri/releases) 页面下载。
+
 ## 灵感来源
 
 本项目受 [Sedentary-reminder](https://github.com/wjbgis/Sedentary-reminder) 启发开发。
