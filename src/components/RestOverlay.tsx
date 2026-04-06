@@ -65,13 +65,30 @@ function RestOverlay({ workMinutes, restMinutes, inputBlock, onComplete }: RestO
   const mins = Math.floor(remaining / 60);
   const secs = remaining % 60;
 
+  // Small window mode (no block)
+  if (!inputBlock) {
+    return (
+      <div className="rest-timer-window">
+        <div className="rest-timer-content">
+          <div className="rest-timer-label">休息中</div>
+          <div className="rest-timer-time">
+            {String(mins).padStart(2, "0")}:{String(secs).padStart(2, "0")}
+          </div>
+          <button className="rest-timer-close" onClick={onComplete}>
+            结束休息
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Fullscreen overlay mode (with block)
   return (
     <div className="rest-overlay">
       <div className="rest-content">
         <h2>您已久坐 {workMinutes} 分钟了</h2>
-        {inputBlock && isAdmin && <p className="warning">键盘和鼠标被锁定，站起来活动下！</p>}
-        {inputBlock && !isAdmin && <p className="warning">请用管理员权限运行以锁定键盘</p>}
-        {!inputBlock && <p>站起来活动下！Alt+Ctrl+Delete 退出</p>}
+        {isAdmin && <p className="warning">键盘和鼠标被锁定，站起来活动下！</p>}
+        {!isAdmin && <p className="warning">请用管理员权限运行以锁定键盘</p>}
 
         <div className="rest-timer">
           {String(mins).padStart(2, "0")}:{String(secs).padStart(2, "0")}

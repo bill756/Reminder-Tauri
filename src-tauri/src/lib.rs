@@ -104,17 +104,47 @@ async fn move_work_window_center(app: AppHandle) -> Result<(), String> {
 
 #[tauri::command]
 async fn create_rest_window(app: AppHandle, work_minutes: i32, rest_minutes: i32, input_block: bool) -> Result<(), String> {
-    let monitors = app.available_monitors().map_err(|e| e.to_string())?;
+    if input_block {
+        // Fullscreen overlay with block mode - one window per monitor
+        let monitors = app.available_monitors().map_err(|e| e.to_string())?;
 
-    for (index, monitor) in monitors.iter().enumerate() {
-        let label = if index == 0 { "rest".to_string() } else { format!("rest-{}", index) };
+        for (index, monitor) in monitors.iter().enumerate() {
+            let label = if index == 0 { "rest".to_string() } else { format!("rest-{}", index) };
 
-        let window = WebviewWindowBuilder::new(
+            let window = WebviewWindowBuilder::new(
+                &app,
+                &label,
+                WebviewUrl::App(format!("index.html?mode=rest&work={}&rest={}&block={}", work_minutes, rest_minutes, if input_block { 1 } else { 0 }).into()),
+            )
+            .title("休息时间")
+            .decorations(false)
+            .always_on_top(true)
+            .skip_taskbar(true)
+            .visible(true)
+            .build()
+            .map_err(|e: tauri::Error| e.to_string())?;
+
+            // Set window to fullscreen on the specific monitor
+            let monitor_size = monitor.size();
+            let _ = window.set_position(tauri::Position::Physical(tauri::PhysicalPosition {
+                x: monitor.position().x,
+                y: monitor.position().y,
+            }));
+            let _ = window.set_size(tauri::Size::Physical(tauri::PhysicalSize {
+                width: monitor_size.width,
+                height: monitor_size.height,
+            }));
+        }
+    } else {
+        // Small window mode without block - similar to work window
+        let rest_window = WebviewWindowBuilder::new(
             &app,
-            &label,
+            "rest",
             WebviewUrl::App(format!("index.html?mode=rest&work={}&rest={}&block={}", work_minutes, rest_minutes, if input_block { 1 } else { 0 }).into()),
         )
         .title("休息时间")
+        .inner_size(180.0, 150.0)
+        .resizable(false)
         .decorations(false)
         .always_on_top(true)
         .skip_taskbar(true)
@@ -122,16 +152,17 @@ async fn create_rest_window(app: AppHandle, work_minutes: i32, rest_minutes: i32
         .build()
         .map_err(|e: tauri::Error| e.to_string())?;
 
-        // Set window to fullscreen on the specific monitor
-        let monitor_size = monitor.size();
-        let _ = window.set_position(tauri::Position::Physical(tauri::PhysicalPosition {
-            x: monitor.position().x,
-            y: monitor.position().y,
-        }));
-        let _ = window.set_size(tauri::Size::Physical(tauri::PhysicalSize {
-            width: monitor_size.width,
-            height: monitor_size.height,
-        }));
+        // Position at bottom-right, same as work window
+        if let Ok(monitor) = rest_window.current_monitor() {
+            if let Some(monitor) = monitor {
+                let size = monitor.size();
+                let x = (size.width as i32) - 200;
+                let y = (size.height as i32) - 170;
+                let _ = rest_window.set_position(tauri::Position::Physical(
+                    tauri::PhysicalPosition { x, y },
+                ));
+            }
+        }
     }
 
     Ok(())

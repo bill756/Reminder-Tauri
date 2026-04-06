@@ -325,6 +325,68 @@ body {
 }
 
 /* ================================================
+   Rest Timer Window - Small floating window
+   ================================================ */
+.rest-timer-window {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: var(--space-lg);
+  background: linear-gradient(135deg, #1a2e1a 0%, #0f1a0f 100%);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  cursor: move;
+  -webkit-app-region: drag;
+}
+
+.rest-timer-window button,
+.rest-timer-window input {
+  -webkit-app-region: no-drag;
+}
+
+.rest-timer-content {
+  text-align: center;
+}
+
+.rest-timer-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--status-rest);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+}
+
+.rest-timer-window .rest-timer-time {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--status-rest);
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(127, 176, 105, 0.4);
+}
+
+.rest-timer-close {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-lg);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: rgba(127, 176, 105, 0.2);
+  border: 1px solid rgba(127, 176, 105, 0.4);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.rest-timer-close:hover {
+  background: rgba(127, 176, 105, 0.3);
+  border-color: var(--status-rest);
+}
+
+/* ================================================
    Rest Overlay - Fullscreen
    ================================================ */
 .rest-overlay {
